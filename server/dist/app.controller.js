@@ -20,11 +20,15 @@ let AppController = exports.AppController = class AppController {
         this.appService = appService;
     }
     getDrivers() {
-        return this.appService.getDrivers();
+        const drivers = this.appService.getDrivers();
+        console.log(drivers);
+        return drivers;
     }
     overtake(id) {
         this.appService.overtake(id);
-        return this.appService.getDrivers();
+        const currentOrder = this.appService.getDrivers();
+        console.log(currentOrder);
+        return currentOrder;
     }
 };
 __decorate([

@@ -7,12 +7,16 @@ export class AppController {
 
   @Get()
   getDrivers(): Driver[] {
-    return this.appService.getDrivers();
+    const drivers = this.appService.getDrivers();
+    console.log(drivers);
+    return drivers;
   }
 
   @Post('/overtake/:id')
   overtake(@Param('id') id: number): Driver[] {
     this.appService.overtake(id);
-    return this.appService.getDrivers();
+    const currentOrder = this.appService.getDrivers();
+    console.log(currentOrder);
+    return currentOrder;
   }
 }
