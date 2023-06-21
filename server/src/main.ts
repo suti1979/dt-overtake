@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import * as express from 'express';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +15,8 @@ async function bootstrap() {
   // };
 
   app.enableCors();
+  app.use('/static', express.static(join(__dirname, '..', 'public')));
+
   await app.listen(4000);
 }
 bootstrap();

@@ -12,7 +12,7 @@ export class AppService {
 
   private async loadDrivers(): Promise<void> {
     const readFileAsync = promisify(fs.readFile);
-    const filePath = 'static/drivers.json';
+    const filePath = 'public/drivers.json';
 
     try {
       const fileData = await readFileAsync(filePath, 'utf8');
@@ -51,6 +51,7 @@ export class AppService {
     let currentIndex = this.drivers.length;
 
     for (let i = 0; i < this.drivers.length; i++) {
+      this.drivers[i].imgUrl = `/static/${this.drivers[i].code.toLowerCase()}.png`;
       this.drivers[i].place = i + 1;
     }
 

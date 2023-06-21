@@ -1,5 +1,8 @@
 ### get all the data from the database
-GET http://localhost:4000
+GET http://localhost:4000/api/drivers
 
 ### overtake by id
-POST http://localhost:4000/overtake/3
+POST http://localhost:4000/api/drivers/0/overtake
+
+### images
+GET http://localhost:4000/static/bot.png

@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('api/drivers')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -12,7 +12,7 @@ export class AppController {
     return drivers;
   }
 
-  @Post('/overtake/:id')
+  @Post(':id/overtake')
   overtake(@Param('id') id: number): Driver[] {
     this.appService.overtake(id);
     const currentOrder = this.appService.getDrivers();

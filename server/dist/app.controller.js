@@ -38,14 +38,14 @@ __decorate([
     __metadata("design:returntype", Array)
 ], AppController.prototype, "getDrivers", null);
 __decorate([
-    (0, common_1.Post)('/overtake/:id'),
+    (0, common_1.Post)(':id/overtake'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Array)
 ], AppController.prototype, "overtake", null);
 exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
+    (0, common_1.Controller)('api/drivers'),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map
