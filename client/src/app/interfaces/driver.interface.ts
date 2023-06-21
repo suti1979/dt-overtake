@@ -1,5 +1,9 @@
 interface Driver {
   id: number;
-  name: string;
+  code: string;
+  firstname: string;
+  lastname: string;
+  country: string;
+  team: string;
   place: number;
 }

@@ -11,27 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
-const driversDB = [
-    {
-        id: 1,
-        name: 'Lewis Hamilton',
-        place: 1,
-    },
-    {
-        id: 2,
-        name: 'Valtteri Bottas',
-        place: 2,
-    },
-    {
-        id: 3,
-        name: 'Max Verstappen',
-        place: 3,
-    },
-];
+const util_1 = require("util");
+const fs = require("fs");
 let AppService = exports.AppService = class AppService {
     constructor() {
-        this.drivers = driversDB;
-        this.shuffleDrivers();
+        this.drivers = [];
+        this.loadDrivers();
+    }
+    async loadDrivers() {
+        const readFileAsync = (0, util_1.promisify)(fs.readFile);
+        const filePath = 'static/drivers.json';
+        try {
+            const fileData = await readFileAsync(filePath, 'utf8');
+            this.drivers = JSON.parse(fileData);
+            this.shuffleDrivers();
+        }
+        catch (error) {
+            throw new Error('Failed to load drivers from JSON file.');
+        }
     }
     getDrivers() {
         return this.drivers;
@@ -52,6 +49,9 @@ let AppService = exports.AppService = class AppService {
     }
     shuffleDrivers() {
         let currentIndex = this.drivers.length;
+        for (let i = 0; i < this.drivers.length; i++) {
+            this.drivers[i].place = i + 1;
+        }
         while (currentIndex !== 0) {
             const randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;

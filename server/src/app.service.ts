@@ -1,29 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-
-const driversDB: Driver[] = [
-  {
-    id: 1,
-    name: 'Lewis Hamilton',
-    place: 1,
-  },
-  {
-    id: 2,
-    name: 'Valtteri Bottas',
-    place: 2,
-  },
-  {
-    id: 3,
-    name: 'Max Verstappen',
-    place: 3,
-  },
-];
+import { promisify } from 'util';
+import * as fs from 'fs';
 
 @Injectable()
 export class AppService {
-  private readonly drivers: Driver[];
+  private drivers: Driver[];
   constructor() {
-    this.drivers = driversDB;
-    this.shuffleDrivers();
+    this.drivers = [];
+    this.loadDrivers();
+  }
+
+  private async loadDrivers(): Promise<void> {
+    const readFileAsync = promisify(fs.readFile);
+    const filePath = 'static/drivers.json';
+
+    try {
+      const fileData = await readFileAsync(filePath, 'utf8');
+      this.drivers = JSON.parse(fileData);
+      this.shuffleDrivers();
+    } catch (error) {
+      throw new Error('Failed to load drivers from JSON file.');
+    }
   }
 
   getDrivers(): Driver[] {
@@ -41,9 +38,7 @@ export class AppService {
       return;
     }
 
-    const previousDriver = this.drivers.find(
-      (d) => d.place === driver.place - 1,
-    );
+    const previousDriver = this.drivers.find((d) => d.place === driver.place - 1);
 
     driver.place--;
 
@@ -54,6 +49,10 @@ export class AppService {
 
   private shuffleDrivers(): void {
     let currentIndex = this.drivers.length;
+
+    for (let i = 0; i < this.drivers.length; i++) {
+      this.drivers[i].place = i + 1;
+    }
 
     while (currentIndex !== 0) {
       const randomIndex = Math.floor(Math.random() * currentIndex);

@@ -19,7 +19,9 @@ export default function Card(driver: Driver) {
       onClick={() => overtake(driver.id)}
     >
       <div>ID: {driver.id}</div>
-      <div>Name: {driver.name}</div>
+      <div>
+        Name: {driver.firstname} {driver.lastname}
+      </div>
       <div>Place: {driver.place}</div>
     </div>
   );
