@@ -1,7 +1,7 @@
-import Card from "./components/Card";
+import Card from "../components/Card";
 
 async function getData() {
-  const res = await fetch("http://localhost:4000", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/drivers`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch data");
@@ -14,8 +14,8 @@ export default async function Home() {
   const sortedData = data.sort((a: Driver, b: Driver) => a.place - b.place);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-4xl font-bold">DT-Overtake</h1>
+    <main className="flex min-h-screen flex-col items-center p-8 ">
+      <h1 className="text-4xl font-bold mb-8">DT Click to overtake</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-6xl">
         {sortedData.map((driver: Driver) => (
           <Card key={driver.id} {...driver} />
