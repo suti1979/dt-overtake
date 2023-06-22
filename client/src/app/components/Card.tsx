@@ -1,7 +1,5 @@
 "use client";
-// import { useRouter } from "next/navigation";
 import React from "react";
-import Image from "next/image";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { Reorder, useMotionValue } from "framer-motion";
 
@@ -21,7 +19,7 @@ export default function Card({ driver }: { driver: Driver }) {
           </span>
         </div>
         <div>{driver.team}</div>
-        <Image
+        <img
           src={`${process.env.NEXT_PUBLIC_SERVER_URL}${driver.imgUrl}`}
           alt={driver.lastname}
           width={100}
