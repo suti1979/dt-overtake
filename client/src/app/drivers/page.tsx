@@ -23,7 +23,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 ">
-      <h1 className="text-4xl font-bold mb-8">DT Move to change places</h1>
+      <h1 className="text-4xl font-bold ">DT Drivers</h1>
+      <h4 className=" mb-2">Drag and drop to reorder</h4>
       <div className="flex flex-col items-center justify-center w-full max-w-6xl">
         <Reorder.Group axis="y" onReorder={handleReorder} values={items}>
           {items.map((driver: Driver) => (

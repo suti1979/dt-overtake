@@ -1,7 +1,8 @@
 import "./globals.css";
-import { Roboto } from "next/font/google";
+import { Poppins, Roboto } from "next/font/google";
 
 const inter = Roboto({ weight: "400", subsets: ["latin"] });
+const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
   title: "DT-Overtake",
@@ -15,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }
