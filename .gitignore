@@ -1,5 +1,6 @@
 # compiled output
 /dist
+dist/
 /node_modules
 node_modules
 
@@ -41,6 +42,7 @@ lerna-debug.log*
 /node_modules
 /.pnp
 .pnp.js
+/dist
 
 # testing
 /coverage
