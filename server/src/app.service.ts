@@ -23,6 +23,10 @@ export class AppService {
     }
   }
 
+  updateAll(drivers: Driver[]): void {
+    this.drivers = drivers;
+  }
+
   getDrivers(): Driver[] {
     return this.drivers;
   }

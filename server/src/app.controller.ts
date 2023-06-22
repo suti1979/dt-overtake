@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller('api/drivers')
@@ -8,15 +8,19 @@ export class AppController {
   @Get()
   getDrivers(): Driver[] {
     const drivers = this.appService.getDrivers();
-    console.log(drivers);
     return drivers;
+  }
+
+  @Post()
+  updateAll(@Body() drivers: Driver[]): Driver[] {
+    this.appService.updateAll(drivers);
+    return this.appService.getDrivers();
   }
 
   @Post(':id/overtake')
   overtake(@Param('id') id: number): Driver[] {
     this.appService.overtake(id);
     const currentOrder = this.appService.getDrivers();
-    console.log(currentOrder);
     return currentOrder;
   }
 }
