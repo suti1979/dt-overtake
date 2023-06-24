@@ -1,17 +1,26 @@
-# Stage 1: Build the application
-FROM node:16 as build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:18-alpine As development
+WORKDIR /usr/src/app
+COPY --chown=node:node package*.json ./
+RUN npm i
+# Bundle app source
+COPY --chown=node:node . .
+# Use the node user from the image (instead of the root user)
+USER node
 
-# Stage 2: Run the built application
-FROM node:16
-WORKDIR /app
-COPY --from=build /app/package*.json ./
-RUN npm install --only=production
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/public ./public 
-EXPOSE 4000
-CMD ["npm", "run", "start:prod"]
+
+FROM node:18-alpine As build
+WORKDIR /usr/src/app
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node . .
+RUN npm run build
+ENV NODE_ENV production
+RUN npm i --only=production && npm cache clean --force
+USER node
+
+FROM node:18-alpine As production
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/public ./public 
+EXPOSE 8080
+CMD [ "node", "dist/main.js" ]
