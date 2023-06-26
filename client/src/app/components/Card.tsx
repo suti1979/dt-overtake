@@ -24,6 +24,7 @@ export default function Card({ driver }: { driver: Driver }) {
           alt={driver.lastname}
           width={80}
           height={80}
+          className=" pointer-events-none"
         />
       </div>
     </Reorder.Item>
