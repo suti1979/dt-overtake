@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { promisify } from 'util';
 import * as fs from 'fs';
+import { DriverDto } from './dto/driver.dto';
 
 @Injectable()
 export class AppService {
@@ -68,5 +69,25 @@ export class AppService {
         this.drivers[currentIndex].place,
       ];
     }
+  }
+
+  addDriver(file: Express.Multer.File, body: DriverDto): void {
+    const newDriver = {
+      id: this.drivers.length + 1,
+      place: this.drivers.length + 1,
+      code: 'STI',
+      firstname: body.firstName,
+      lastname: 'x',
+      country: 'HU',
+      team: 'sti',
+      imgUrl: '',
+    };
+
+    console.log('FFF: ', file);
+    console.log('body', body);
+
+    newDriver.imgUrl = `/static/${file.filename}`;
+
+    this.drivers.push(newDriver);
   }
 }

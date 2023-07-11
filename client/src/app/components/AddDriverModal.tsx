@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { useForm } from "react-hook-form";
 
 declare global {
@@ -10,7 +11,7 @@ declare global {
 }
 
 type FormData = {
-  driverName: string;
+  firstName: string;
   fileInput: FileList;
 };
 
@@ -25,10 +26,10 @@ export default function AddDriverModal() {
     console.log(data);
 
     const formData = new FormData();
-    formData.append("driverName", data.driverName);
-    formData.append("fileInput", data.fileInput[0]);
+    formData.append("firstName", data.firstName);
+    formData.append("file", data.fileInput[0]);
 
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/drivers`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/drivers/add`, {
       method: "POST",
       body: formData,
     })
@@ -38,7 +39,7 @@ export default function AddDriverModal() {
         window.add_modal.close();
       });
 
-    // TODO: revalidate path.
+    // revalidatePath("/drivers");
   };
 
   return (
@@ -65,17 +66,17 @@ export default function AddDriverModal() {
             type="text"
             placeholder="Drivers name"
             className={`input input-bordered w-full max-w-xs mb-4 ${
-              errors.driverName ? "input-error" : ""
+              errors.firstName ? "input-error" : ""
             }`}
-            {...register("driverName", { required: true })}
+            {...register("firstName", { required: true })}
           />
-          {errors.driverName && (
+          {errors.firstName && (
             <p className="text-red-500 mb-4">This field is required</p>
           )}
           <input
             type="file"
             className={`file-input file-input-bordered w-full max-w-xs mb-4 ${
-              errors.driverName ? "input-error" : ""
+              errors.firstName ? "input-error" : ""
             }`}
             {...register("fileInput", { required: true })}
           />
