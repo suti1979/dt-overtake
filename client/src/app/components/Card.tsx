@@ -1,7 +1,9 @@
 "use client";
+
 import React from "react";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { Reorder, useMotionValue } from "framer-motion";
+import Image from "next/image";
 
 export default function Card({ driver }: { driver: Driver }) {
   const y = useMotionValue(0);
@@ -19,7 +21,7 @@ export default function Card({ driver }: { driver: Driver }) {
           </span>
         </div>
         <div>{driver.team}</div>
-        <img
+        <Image
           src={`${process.env.NEXT_PUBLIC_SERVER_URL}${driver.imgUrl}`}
           alt={driver.lastname}
           width={80}
@@ -30,14 +32,3 @@ export default function Card({ driver }: { driver: Driver }) {
     </Reorder.Item>
   );
 }
-
-//  async function overtake(id: number) {
-//    const res = await fetch(
-//      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/drivers/${id}/overtake`,
-//      {
-//        method: "POST",
-//      }
-//    );
-//    if (!res.ok) throw new Error("Failed to overtake");
-//    router.refresh();
-//  }
