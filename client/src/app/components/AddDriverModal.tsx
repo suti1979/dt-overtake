@@ -1,5 +1,5 @@
-import { revalidatePath } from "next/cache";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -15,16 +15,19 @@ type FormData = {
   fileInput: FileList;
 };
 
-export default function AddDriverModal() {
+export default function AddDriverModal({
+  setItems,
+}: {
+  setItems: React.Dispatch<React.SetStateAction<Driver[]>>;
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const router = useRouter();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-
     const formData = new FormData();
     formData.append("firstName", data.firstName);
     formData.append("file", data.fileInput[0]);
@@ -35,11 +38,11 @@ export default function AddDriverModal() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         window.add_modal.close();
+        setItems(data);
       });
 
-    // revalidatePath("/drivers");
+    router.refresh();
   };
 
   return (
